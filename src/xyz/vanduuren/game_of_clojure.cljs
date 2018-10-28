@@ -79,10 +79,10 @@
         height (second dimensions)]
     ;; a special tile-value which returns 0 for out of bounds tiles
     (defn safe-tile-value [xy] (let [x (first xy)
-                                y (second xy)]
-                          (if (or (< x 0) (< y 0) (>= x width) (>= y height))
-                            0
-                            (tile-value x y grid))))
+                                     y (second xy)]
+                                 (if (or (< x 0) (< y 0) (>= x width) (>= y height))
+                                   0
+                                   (tile-value x y grid))))
     ;; get the coordinates of all the neighbors, even if they'd fall of the grid
     ;; and then call tile-value on those coordinates
     ;; we do this by having a collection of functions that shift the coordinates of
@@ -91,15 +91,15 @@
     ;; then used as input for safe-tile-value
     ;; TODO: probably easier with matrix arithmetic
     (def neighbors (mapv (fn [fun] (safe-tile-value (fun x y)))
-          [(fn [x y] (list (dec x) (dec y)))
-           (fn [x y] (list x (dec y)))
-           (fn [x y] (list (inc x) (dec y)))
-           (fn [x y] (list (dec x) y))
-           ;; (fn [x y] (list x y) <-- this'd be the tile itself, don't count it
-           (fn [x y] (list (inc x) y))
-           (fn [x y] (list (dec x) (inc y)))
-           (fn [x y] (list x (inc y)))
-           (fn [x y] (list (inc x) (inc y)))]))
+                         [(fn [x y] (list (dec x) (dec y)))
+                          (fn [x y] (list x (dec y)))
+                          (fn [x y] (list (inc x) (dec y)))
+                          (fn [x y] (list (dec x) y))
+                          ;; (fn [x y] (list x y) <-- this'd be the tile itself, don't count it
+                          (fn [x y] (list (inc x) y))
+                          (fn [x y] (list (dec x) (inc y)))
+                          (fn [x y] (list x (inc y)))
+                          (fn [x y] (list (inc x) (inc y)))]))
     ;; above leaves us with the number of live neighoring cells, which we then
     ;; all add up using reduce with the addition (+) function
     (reduce + neighbors)))
@@ -131,11 +131,11 @@
         width (first dimensions)
         height (second dimensions)]
     (mapv (fn [y] (mapv (fn [x]
-                        (let [current-state (tile-value x y grid)
-                              neighbor-count (get-neighbor-count grid x y)]
-                          (tile-lives current-state neighbor-count)))
-                      (range 0 width)))
-        (range 0 height))))
+                          (let [current-state (tile-value x y grid)
+                                neighbor-count (get-neighbor-count grid x y)]
+                            (tile-lives current-state neighbor-count)))
+                        (range 0 width)))
+          (range 0 height))))
 
 (def empty-board "Helper function to create an empty board"
   (vec (repeat grid-height (vec (repeat grid-width 0)))))
@@ -173,4 +173,4 @@
   ;; optionally touch your app-state to force rerendering depending on
   ;; your application
   ;; (swap! app-state update-in [:__figwheel_counter] inc)
-)
+  )
