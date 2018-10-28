@@ -40,3 +40,5 @@ To create a production build run:
 Copyright © 2018 B.C. van Duuren
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
+
+[vanduuren_xyz]: https://vanduuren.xyz
