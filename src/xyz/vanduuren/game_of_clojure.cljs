@@ -8,18 +8,24 @@
 (def canvas (gdom/getElement "canvas"))
 (def ctx (.getContext canvas "2d"))
 (def tile-size 10)
-(def color-on "black")
+(def color-on "darkgrey")
 (def color-off "white")
-(def grid-height 40)
-(def grid-width 100)
+(def grid-height 22)
+(def grid-width 42)
 
-(defn tile-color [bit]
-  (if (= bit 1)
+(defn tile-color [bit x y]
+  ;; first of all, determine whether the grid is alive or not
+  (if (and (= bit 1)
+           ;; then we want to know its position, we take a buffer of 2 rows top and bottom
+           ;; and two columns left and right where we will not draw live cells, because
+           ;; we want to see them exit the grid nicely
+           (and (> x 1) (> y 1) (< x (- grid-width 2)) (< y (- grid-height 2))))
     color-on
     color-off))
 
 (defn draw-tile! [x y color]
   ;; workaround to get crisp grid lines
+  ;; (we won't see it for now, but lets keep it in for reference)
   (.setTransform ctx 1, 0, 0, 1, 0.5, 0.5)
   
   ;; begin drawing a new path in the canvas
@@ -30,11 +36,8 @@
   (.fill ctx)
 
   (set! (.-lineWidth ctx) 0.5)
-  (set! (.-strokeStyle ctx) color-on)
+  (set! (.-strokeStyle ctx) color-off)
   (.stroke ctx))
-
-(defn clear-board! []
-  (.clearRect ctx 0 0 (.-width ctx) (.-height ctx)))
 
 (defn get-tile [grid x y] (nth (nth grid y) x))
 (defn get-dimensions [grid]
@@ -57,7 +60,7 @@
      (mapv
       (fn [x]
         (let [tile-state (get-tile grid x y)]
-           (draw-tile! (* tile-size x) (* tile-size y) (tile-color tile-state))))
+           (draw-tile! (* tile-size x) (* tile-size y) (tile-color tile-state x y))))
       (range 0 width)))
    (range 0 height)))
 
@@ -127,7 +130,7 @@
 
   (build-board-inter coords empty-board))
 ;; thanks to https://github.com/jdomingu/GameOfLifeLisp/blob/master/game-of-life.lsp
-(def gosper '((5 1) (5 2) (6 1) (6 2) (5 11) (6 11) (7 11) (4 12) (3 13) (3 14) (8 12) (9 13) (9 14) (6 15) (4 16) (5 17) (6 17) (7 17) (6 18) (8 16) (3 21) (4 21) (5 21) (3 22) (4 22) (5 22) (2 23) (6 23) (1 25) (2 25) (6 25) (7 25) (3 35) (4 35) (3 36) (4 36)))
+(def gosper '((5 2) (5 3) (6 2) (6 3) (5 12) (6 12) (7 12) (4 13) (3 14) (3 15) (8 13) (9 14) (9 15) (6 16) (4 17) (5 18) (6 18) (7 18) (6 19) (8 17) (3 22) (4 22) (5 22) (3 23) (4 23) (5 23) (2 24) (6 24) (1 26) (2 26) (6 26) (7 26) (3 36) (4 36) (3 37) (4 37)))
 (def board (build-board gosper))          
 ;;(def board [
 ;;           [0 1 0 0]
