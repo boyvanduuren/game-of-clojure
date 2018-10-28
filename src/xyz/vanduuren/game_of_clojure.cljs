@@ -124,7 +124,8 @@
       ;; but if it has 2 or 3 live neighbors it stays alive
       :else 1)))
 
-(defn next-generation "Calculate the next generation of the grid. This is done sequentially and can be optimized. Might be a nice exercise for the future."
+(defn next-generation "Calculate the next generation of the grid.
+  This is done sequentially and can be optimized. Might be a nice exercise for the future."
   [grid]
   
   (let [dimensions (get-dimensions grid)
@@ -153,7 +154,8 @@
 
   (build-board-inter coords empty-board))
 
-(def gosper "Coordinates for Gosper's gliding gun, thanks to https://github.com/jdomingu/GameOfLifeLisp/blob/master/game-of-life.lsp"
+(def gosper "Coordinates for Gosper's gliding gun, thanks
+  to https://github.com/jdomingu/GameOfLifeLisp/blob/master/game-of-life.lsp"
   '((5 2) (5 3) (6 2) (6 3) (5 12) (6 12) (7 12) (4 13) (3 14) (3 15) (8 13) (9 14) (9 15) (6 16) (4 17) (5 18) (6 18) (7 18) (6 19) (8 17) (3 22) (4 22) (5 22) (3 23) (4 23) (5 23) (2 24) (6 24) (1 26) (2 26) (6 26) (7 26) (3 36) (4 36) (3 37) (4 37)))
 
 (def board "Build a board using gosper's coordinates" (build-board gosper))          
