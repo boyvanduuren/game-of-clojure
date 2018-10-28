@@ -1,14 +1,19 @@
 # game-of-clojure
 
-FIXME: Write a one-line description of your library/project.
+Conway's Game of Life in Clojure. See it play at
+[vanduuren.xyz][vanduuren_xyz].
 
 ## Overview
 
-FIXME: Write a paragraph about the library/project and highlight its goals.
+Naive implementation of Game of Life written during one of the worst stand-by
+duties of my life. Written to replace the front page of
+[vanduuren.xyz][vanduuren_xyz] because that was never updated anyway.
 
 ## Development
 
-To get an interactive development environment run:
+To get an interactive development environment, first you'll want to install
+clojure and figwheel (see https://rigsomelight.com/figwheel-main-template/).
+Then you can run:
 
     clojure -A:fig:build
 
@@ -32,6 +37,6 @@ To create a production build run:
 
 ## License
 
-Copyright © 2018 FIXME
+Copyright © 2018 B.C. van Duuren
 
 Distributed under the Eclipse Public License either version 1.0 or (at your option) any later version.
